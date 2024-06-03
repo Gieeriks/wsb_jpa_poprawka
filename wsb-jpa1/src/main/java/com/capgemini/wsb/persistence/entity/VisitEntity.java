@@ -20,7 +20,6 @@ public class VisitEntity {
 	@Column(nullable = false)
 	private LocalDateTime time;
 
-	// One direction
 	@OneToMany(
 			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
 			fetch = FetchType.LAZY,
@@ -29,12 +28,10 @@ public class VisitEntity {
 	@JoinColumn(name = "VISIT_ID")
 	private Collection<MedicalTreatmentEntity> medicalTreatments;
 
-	// Two direction
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private DoctorEntity doctor;
 
-	// Two direction
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
 	private PatientEntity patient;
 
 	public Long getId() {
@@ -65,16 +62,23 @@ public class VisitEntity {
 		return medicalTreatments;
 	}
 
+	public void setMedicalTreatments(Collection<MedicalTreatmentEntity> medicalTreatments) {
+		this.medicalTreatments = medicalTreatments;
+	}
+
 	public DoctorEntity getDoctor() {
 		return doctor;
 	}
 
-	public void setDoctor(DoctorEntity doctor) { this.doctor = doctor; }
+	public void setDoctor(DoctorEntity doctor) {
+		this.doctor = doctor;
+	}
 
 	public PatientEntity getPatient() {
 		return patient;
 	}
 
-	public void setPatient(PatientEntity patient) { this.patient = patient; }
-
+	public void setPatient(PatientEntity patient) {
+		this.patient = patient;
+	}
 }

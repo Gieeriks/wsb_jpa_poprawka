@@ -33,7 +33,7 @@ public class PatientEntity {
 	@Column(nullable = false, length = 10)
 	private LocalDate dateOfBirth;
 
-	@OneToMany(mappedBy = "patient", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private Collection<VisitEntity> visits;
 
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
@@ -43,6 +43,8 @@ public class PatientEntity {
 			inverseJoinColumns = @JoinColumn(name = "ADDRESS_ID")
 	)
 	private Collection<AddressEntity> addresses;
+
+	// Gettery i settery
 
 	public Long getId() {
 		return id;
@@ -104,9 +106,15 @@ public class PatientEntity {
 		return visits;
 	}
 
-	public void setVisits(Collection<VisitEntity> visits) { this.visits = visits; }
+	public void setVisits(Collection<VisitEntity> visits) {
+		this.visits = visits;
+	}
 
-	public Collection<AddressEntity> getAddresses() { return addresses; }
+	public Collection<AddressEntity> getAddresses() {
+		return addresses;
+	}
 
-	public void setAddresses(Collection<AddressEntity> addresses) { this.addresses = addresses; }
+	public void setAddresses(Collection<AddressEntity> addresses) {
+		this.addresses = addresses;
+	}
 }

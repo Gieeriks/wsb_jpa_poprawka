@@ -61,7 +61,7 @@ public class DoctorDaoTest
         // given
 
         // when
-        final DoctorEntity doc = doctorDao.findOne(1L);
+        final DoctorEntity doc = doctorDao.findOneWithVisits(1L);
 
         // then
         assertThat(doc.getVisits().size()).isEqualTo(2L);
